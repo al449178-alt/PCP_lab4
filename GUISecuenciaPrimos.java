@@ -68,12 +68,14 @@ public class GUISecuenciaPrimos {
     
     // Activa inicialmente los 2 botones.
     btnIniciaSecuencia.setEnabled( true );  // (A)
-    btnCancelaSecuencia.setEnabled( true ); // (B)
+    btnCancelaSecuencia.setEnabled( false ); // (B)
 
     // Anyade codigo para procesar el evento del boton de Inicia secuencia.
     btnIniciaSecuencia.addActionListener( new ActionListener() {
         public void actionPerformed( ActionEvent e ) {
           // (C) ...
+          btnIniciaSecuencia.setEnabled(false);
+          btnCancelaSecuencia.setEnabled(true);
         }
     } );
 
@@ -81,6 +83,8 @@ public class GUISecuenciaPrimos {
     btnCancelaSecuencia.addActionListener( new ActionListener() {
         public void actionPerformed( ActionEvent e ) {
           // (D) ...
+          btnCancelaSecuencia.setEnabled(false);
+          btnIniciaSecuencia.setEnabled(true);
         }
     } );
 
