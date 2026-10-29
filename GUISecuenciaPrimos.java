@@ -11,7 +11,7 @@ public class GUISecuenciaPrimos {
   JTextField  txfMensajes;
   JButton     btnIniciaSecuencia, btnCancelaSecuencia;
   JSlider     sldEspera;
-//  HebraTrabajadora  t; // Ejercicio 2.2
+  HebraTrabajadora  t; // Ejercicio 2.2
 //  ZonaIntercambio   z; // Ejercicio 2.3
   
   // -------------------------------------------------------------------------
@@ -76,6 +76,8 @@ public class GUISecuenciaPrimos {
           // (C) ...
           btnIniciaSecuencia.setEnabled(false);
           btnCancelaSecuencia.setEnabled(true);
+          t= new HebraTrabajadora(txfMensajes);
+          t.start();
         }
     } );
 
@@ -85,6 +87,9 @@ public class GUISecuenciaPrimos {
           // (D) ...
           btnCancelaSecuencia.setEnabled(false);
           btnIniciaSecuencia.setEnabled(true);
+          if (t!=null){
+            t.paraYa();
+          }
         }
     } );
 
@@ -126,28 +131,44 @@ public class GUISecuenciaPrimos {
   }
 }
 
-/*
+
 // ===========================================================================
 class HebraTrabajadora extends Thread {
 // ===========================================================================
   // (F) ...
+  private volatile boolean fin = false;
+  private JTextField txfMnesajes;
 
-  public HebraTrabajadora ( ... ) {
+  public HebraTrabajadora ( JTextField txfMnesajes ) {
     // (G) ...
+    this.txfMnesajes=txfMnesajes;
   }
 
   // -------------------------------------------------------------------------
   public void paraYa() {
     // (H) ...
+    this.fin=true;
   }
 
   // -------------------------------------------------------------------------
 
   public void run() {
     // (I) ...
+    long i = 1L;
+    while(!fin){
+      if (GUISecuenciaPrimos.esPrimo(i)){
+        final long primo =i;
+        SwingUtilities.invokeLater(new Runnable() {
+          public void run() {
+            txfMnesajes.setText(String.valueOf(primo));
+          }
+        });
+      }
+      i++;
+    }
   }
 }
-
+/*
 // ===========================================================================
 class ZonaIntercambio {
 // ===========================================================================
